@@ -86,7 +86,7 @@ function render() {
       <div class="fields">
         ${c.fields.map((f) => `
           <label class="field"><span>${f.label}</span>
-            <input type="number" min="0" inputmode="numeric" value="${state.values[fk(c, f)] || ""}"
+            <input type="number" min="0" ${f.max != null ? `max="${f.max}"` : ""} inputmode="numeric" value="${state.values[fk(c, f)] || ""}"
                    placeholder="0" data-value="${fk(c, f)}">
           </label>`).join("")}
       </div>
@@ -132,7 +132,11 @@ document.addEventListener("click", (e) => {
 document.addEventListener("input", (e) => {
   const i = e.target;
   if (i.dataset.value) {
-    state.values[i.dataset.value] = Math.max(0, Number(i.value) || 0);
+    const f = cfg.classes.flatMap((c) => c.fields.map((x) => ({ k: fk(c, x), max: x.max })))
+      .find((x) => x.k === i.dataset.value);
+    let n = Math.max(0, Number(i.value) || 0);
+    if (f && f.max != null && n > f.max) { n = f.max; i.value = n; }   // tope máximo
+    state.values[i.dataset.value] = n;
     save(); refreshTotals();
   }
 });

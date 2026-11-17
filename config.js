@@ -24,20 +24,20 @@ window.DEFAULT_CONFIG = {
   classes: [
     // Clase Obrera: impuesto = tabla[nivel ley 2 (Mercado Laboral)][nivel ley 3 (Impuestos)] × Población
     { id: "working", name: "Clase Obrera", color: "#c0392b", fields: [
-      { id: "pop", label: "Población" } ],
+      { id: "pop", label: "Población", max: 10 } ],
       table: { rowLaw: "labor", colLaw: "tax", perField: "pop",
         values: { A: { A: 7, B: 6, C: 5 }, B: { A: 4, B: 4, C: 4 }, C: { A: 1, B: 2, C: 3 } } } },
     // Clase Media: impuesto = tabla[nivel ley 2][nivel ley 3] × empresas externas con trabajadores
     //                        + multiplicador impositivo × empresas propias
     { id: "middle", name: "Clase Media", color: "#e6a23c", note: "Esto debe ser con empresas operativas.", fields: [
-      { id: "ext", label: "Empresas externas con trabajadores" },
-      { id: "own", label: "Empresas propias" } ],
+      { id: "ext", label: "Empresas externas con trabajadores", max: 21 },
+      { id: "own", label: "Empresas propias", max: 8 } ],
       table: { rowLaw: "labor", colLaw: "tax", perField: "ext", multField: "own",
         values: { A: { A: 7, B: 6, C: 5 }, B: { A: 4, B: 4, C: 4 }, C: { A: 1, B: 2, C: 3 } } } },
     // Capitalistas: base = multiplicador × empresas; renta restante = renta − base;
     // impuesto = base + tabla(renta restante, nivel ley 3)
     { id: "capitalist", name: "Capitalistas", color: "#2c6fbb", note: "Esto debe ser con empresas operativas.", fields: [
-      { id: "firms", label: "Número de empresas" },
+      { id: "firms", label: "Número de empresas", max: 12 },
       { id: "income", label: "Ingresos" } ],
       corp: { firmsField: "firms", revenueField: "income", colLaw: "tax",
         // min = renta mínima del tramo (por debajo de 5 no se paga)
