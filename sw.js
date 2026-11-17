@@ -1,4 +1,4 @@
-const CACHE = "hegemony-tax-v27";
+const CACHE = "hegemony-tax-v28";
 const FILES = ["./", "index.html", "style.css", "app.js", "config.js", "icon.svg", "manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {
